@@ -1,12 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.pros.oassis_glass">
+    package="io.pros.oassis_glass" >
 
-    <application android:allowBackup="true"
-        android:label="@string/app_name"
+    <uses-permission android:name="com.google.android.glass.permission.DEVELOPMENT" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-feature android:required="true" android:name="android.hardware.camera" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <application
+        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
+        <service android:name="io.pros.oassis_glass.VoiceReceiverService"
+            android:label="@string/app_name"
+            android:enabled="true"
+            android:permission="">
+            <!--<intent-filter>
+                <action android:name=
+                    "com.google.android.glass.action.VOICE_TRIGGER" />
+            </intent-filter>
 
+            <meta-data android:name="com.google.android.glass.VoiceTrigger"
+                android:resource="@xml/traffic_light_trigger" />-->
+        </service>
+
+        <activity android:name=".VoiceReceiverActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name=
+                    "com.google.android.glass.action.VOICE_TRIGGER" />
+            </intent-filter>
+
+            <meta-data android:name="com.google.android.glass.VoiceTrigger"
+                android:resource="@xml/traffic_light_trigger" />
+        </activity>
+
+        <activity
+            android:name=".MainActivity"
+            android:icon="@drawable/ic_glass_logo"
+            android:label="@string/title_activity_main" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
