@@ -1,10 +1,17 @@
 package io.pros.oassis_glass;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.provider.MediaStore;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 
 import com.google.android.glass.widget.CardBuilder;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -22,6 +29,7 @@ public class UploadPhotoTask extends AsyncTask<byte[], Void, String> {
     HttpURLConnection urlConnection = null;
 
     Activity mainActivity;
+    TextToSpeech tts;
 
     public UploadPhotoTask(Activity activity) {
         mainActivity = activity;
@@ -67,6 +75,25 @@ public class UploadPhotoTask extends AsyncTask<byte[], Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
+        String res = "An error occurred";
+        try {
+            JSONObject obj = new JSONObject(result);
+            JSONArray array = obj.getJSONArray("images").getJSONObject(0).getJSONArray("classifiers");
+            if (array.length() > 0)
+                res = array.getJSONObject(0).getJSONArray("classes").getJSONObject(0).getString("class");
+            else
+                res = "Traffic lights not found";
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        final String finalRes = res;
+        tts = new TextToSpeech(mainActivity, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                tts.speak(finalRes, TextToSpeech.QUEUE_ADD, null);
+            }
+        });
         mainActivity.finish();
     }
 }

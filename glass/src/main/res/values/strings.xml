@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">OAssis-Glass</string>
-    <string name="traffic_light_trigger">Light</string>
+    <string name="traffic_light_trigger">Traffic lights</string>
+    <string name="i_need_help">I need help</string>
+    <string name="i_am_lost">I am lost</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="hello_world">Hello world!</string>
 </resources>

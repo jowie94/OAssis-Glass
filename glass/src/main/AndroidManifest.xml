@@ -1,34 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.pros.oassis_glass" >
+    package="io.pros.oassis_glass">
 
     <uses-permission android:name="com.google.android.glass.permission.DEVELOPMENT" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-feature android:required="true" android:name="android.hardware.camera" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
-        <service android:name="io.pros.oassis_glass.VoiceReceiverService"
-            android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+        <service
+            android:name=".VoiceReceiverService"
             android:enabled="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
             android:permission="">
-            <!--<intent-filter>
-                <action android:name=
-                    "com.google.android.glass.action.VOICE_TRIGGER" />
-            </intent-filter>
 
-            <meta-data android:name="com.google.android.glass.VoiceTrigger"
-                android:resource="@xml/traffic_light_trigger" />-->
-        </service>
-
-        <activity android:name=".VoiceReceiverActivity"
-            android:label="@string/app_name">
+            <!--
             <intent-filter>
                 <action android:name=
                     "com.google.android.glass.action.VOICE_TRIGGER" />
@@ -36,18 +34,57 @@
 
             <meta-data android:name="com.google.android.glass.VoiceTrigger"
                 android:resource="@xml/traffic_light_trigger" />
-        </activity>
+            -->
+        </service>
 
         <activity
-            android:name=".MainActivity"
-            android:icon="@drawable/ic_glass_logo"
-            android:label="@string/title_activity_main" >
-
+            android:name=".VoiceReceiverActivity"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="com.google.android.glass.action.VOICE_TRIGGER" />
             </intent-filter>
+
+            <meta-data
+                android:name="com.google.android.glass.VoiceTrigger"
+                android:resource="@xml/traffic_light_trigger" />
         </activity>
+        <activity
+            android:name=".MainActivity"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/title_activity_main">
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+
+        <service
+            android:name=".HelpService"
+            android:enabled="true"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="com.google.android.glass.action.VOICE_TRIGGER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="com.google.android.glass.VoiceTrigger"
+                android:resource="@xml/i_need_help" />
+        </service>
+        <service
+            android:name=".LostService"
+            android:enabled="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="com.google.android.glass.action.VOICE_TRIGGER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="com.google.android.glass.VoiceTrigger"
+                android:resource="@xml/i_am_lost" />
+        </service>
     </application>
 
 </manifest>
